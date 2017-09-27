@@ -45,13 +45,13 @@ DWORD WINAPI Start(LPVOID lpParam)
 	BYTE *b = (BYTE*)(target1 + 7);
 	VirtualProtect((void*)b, 0x2, PAGE_READWRITE, &dwProtect);
 	*b++ = 0x90;
-	*b = 0x90;
+	*b-- = 0x90;
 	VirtualProtect((void*)b, 0x2, dwProtect, &dwProtect);
 
 	b = (BYTE*)(target2 + 4);
 	VirtualProtect((void*)b, 0x2, PAGE_READWRITE, &dwProtect);
 	*b++ = 0x90;
-	*b = 0x90;
+	*b-- = 0x90;
 	VirtualProtect((void*)b, 0x2, dwProtect, &dwProtect);
 
 	return 0;
