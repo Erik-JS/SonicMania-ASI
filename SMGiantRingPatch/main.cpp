@@ -1,6 +1,6 @@
 #include <Windows.h>
 
-BYTE pattern[] = { 0x83, 0x7E, 0x5C, 0x00, 0x74, 0x16 };
+BYTE pattern[] = { 0x83, 0x7B, 0x5C, 0x00, 0x74, 0x1C };
 
 DWORD locReturn;
 
@@ -8,9 +8,9 @@ __declspec(naked) void CheckNullIDGiantRing()
 {
 	__asm
 	{
-		cmp dword ptr[esi + 0x5C], 0x00000000
+		cmp dword ptr[ebx + 0x5C], 0x00000000
 		jne endoffunction
-		mov dword ptr[esi + 0x5C], 0x000000FF
+		mov dword ptr[ebx + 0x5C], 0x000000FF
 endoffunction:
 		jmp locReturn
 	}
