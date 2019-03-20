@@ -35,7 +35,8 @@ DWORD FindPattern(DWORD StartAddress, DWORD CodeLen, BYTE* Mask, char* StrMask, 
 DWORD WINAPI Start(LPVOID lpParam)
 {
 	Sleep(2100);
-	DWORD target1 = FindPattern(0x400000, 0x500000, pattern1, "xxxxxxxxx", 0);
+	DWORD exeBaseAddr = (DWORD)GetModuleHandle(NULL);
+	DWORD target1 = FindPattern(exeBaseAddr, 0x500000, pattern1, "xxxxxxxxx", 0);
 	if (target1==NULL)
 		return 0;
 

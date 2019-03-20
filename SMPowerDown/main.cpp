@@ -1,5 +1,8 @@
 #include <Windows.h>
 
+DWORD codeloc1 = 0xC85F4;
+DWORD codeloc2 = 0xC830D;
+
 __declspec(naked) void PowerDownFunction()
 {
 	__asm
@@ -8,10 +11,10 @@ __declspec(naked) void PowerDownFunction()
 		jne supercheckdone
 		mov dword ptr [esi+0x124], 0x00000003
 supercheckdone:
-		mov eax, 0x004C85F4
+		mov eax, codeloc1
 		cmp ebx,0xFF
 		jne endoffunction
-		mov eax, 0x004C830D
+		mov eax, codeloc2
 endoffunction:
 		jmp eax
 	}
@@ -47,7 +50,10 @@ DWORD FindPattern(DWORD StartAddress, DWORD CodeLen, BYTE* Mask, char* StrMask, 
 DWORD WINAPI Start(LPVOID lpParam)
 {
 	Sleep(2250);
-	DWORD codeLoc = 0x004C8301;
+	DWORD exeBaseAddr = (DWORD)GetModuleHandle(NULL);
+	DWORD codeLoc = 0xC8301 + exeBaseAddr;
+	codeloc1 += exeBaseAddr;
+	codeloc2 += exeBaseAddr;
 	DWORD codeReturn = codeLoc + 5;
 	DWORD dwProtect;
 	VirtualProtect((void*)codeLoc, 0x6, PAGE_READWRITE, &dwProtect);

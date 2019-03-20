@@ -46,7 +46,8 @@ DWORD FindPattern(DWORD StartAddress, DWORD CodeLen, BYTE* Mask, char* StrMask, 
 DWORD WINAPI Start(LPVOID lpParam)
 {
 	Sleep(1850);
-	DWORD codeLoc = FindPattern(0x400000, 0x500000, pattern, "xxxxxx", 0);
+	DWORD exeBaseAddr = (DWORD)GetModuleHandle(NULL);
+	DWORD codeLoc = FindPattern(exeBaseAddr, 0x500000, pattern, "xxxxxx", 0);
 	if (!codeLoc)
 		return 0;
 	DWORD aux = codeLoc + 5;
